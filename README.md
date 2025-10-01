@@ -1,235 +1,137 @@
 # kramdb
 
 A simple **in-RAM database system** written in C++.  
-The library dynamically creates structured variables (Boolean, Integer, String, Float) inside **tables**, which are organized into **rows** and **cells**.  
+This library allows you to dynamically create tables, rows, cells, and variables during runtime.  
+It is header-only (with one `.hpp` file) and easy to integrate into any C++17+ project.  
 
 ---
 
-## 📖 Table of Contents
-- [Introduction](#introduction)  
-- [Architecture](#architecture)  
-- [Classes](#classes)  
-  - [tableCellObj](#tablecellobj)  
-  - [tableRowObj](#tablerowobj)  
-  - [tableObj](#tableobj)  
-- [Namespace DB](#namespace-db)  
-  - [DB::TABLE](#dbtable)  
-  - [DB::NEW](#dbnew)  
-  - [DB::REMOVE](#dbremove)  
-  - [DB::PRINT](#dbprint)  
-  - [DB::TREE](#dbtree)  
-  - [DB::createDemoTable](#dbcreatedemotable)  
-  - [DB::easterEgg](#dbeasteregg)  
-- [Usage Examples](#usage-examples)  
-- [License](#license)  
+## 📥 Installation
 
----
+Clone the repository or copy the file **`kramdb.hpp`** into your project:  
 
-## Introduction
-`kramdb` is a minimalistic in-memory database engine.  
-It does **not persist data to disk**, everything exists only in RAM.  
-It is intended for experimentation, debugging, and simple table-based memory storage.
+```bash
+git clone https://github.com/krejciad/kramdb.git
+```
 
----
+Then include it in your source code:
 
-## Architecture
-The data model is a **hierarchy**:
-- **Database** → `DB::TABLE` (vector of tables)
-- **Table** → `tableObj` (vector of rows)
-- **Row** → `tableRowObj` (vector of cells)
-- **Cell** → `tableCellObj` (vectors of typed variables)
-
-Each **cell** may contain multiple variables of different types (`bool`, `int`, `string`, `float`).
-
----
-
-## Classes
-
-### `tableCellObj`
-Represents a single **cell** of the table.  
-Each cell can hold multiple variables of supported types.
-
-#### Members
-- `std::vector<bool> cellBoolean`  
-- `std::vector<int> cellInteger`  
-- `std::vector<std::string> cellString`  
-- `std::vector<float> cellFloat`
-
-#### Functions
 ```cpp
-void NEW(TYPE type);
+#include "kramdb.hpp"
 ```
-Creates a new variable inside the cell.  
 
-- `TYPE::Boolean` → adds `false` to `cellBoolean`  
-- `TYPE::Integer` → adds `0` to `cellInteger`  
-- `TYPE::String` → adds empty string `""` to `cellString`  
-- `TYPE::Float` → adds `0.0f` to `cellFloat`  
+No external dependencies are required beyond the C++ standard library.  
 
 ---
 
-### `tableRowObj`
-Represents a **row** of the table.  
+## 🚀 Quick Start
 
-#### Members
-- `std::vector<tableCellObj> CELL`
-
-#### Functions
+### 1. Create a new table
 ```cpp
-void NEW();
+DB::NEW();                 // create a new table
+tableObj& t = DB::TABLE[0]; // get reference to first table
 ```
-Creates a new **cell** in this row.
 
----
-
-### `tableObj`
-Represents an entire **table**.  
-
-#### Members
-- `std::vector<tableRowObj> ROW`
-
-#### Functions
+### 2. Add rows and cells
 ```cpp
-void NEW();
+t.NEW();               // add row 0
+t.ROW[0].NEW();        // add cell 0 inside row 0
 ```
-Creates a new **row** in the table.
 
----
-
-## Namespace DB
-
-All user-facing functions and global data structures are inside the `DB` namespace.
-
----
-
-### `DB::TABLE`
+### 3. Add variables
 ```cpp
-std::vector<tableObj> TABLE;
+// Integer variable
+t.ROW[0].CELL[0].NEW(TYPE::Integer);
+t.ROW[0].CELL[0].cellInteger[0] = 42;
+
+// String variable
+t.ROW[0].CELL[0].NEW(TYPE::String);
+t.ROW[0].CELL[0].cellString[0] = "Hello";
 ```
-Global container for all tables in the system.
 
----
-
-### `DB::NEW`
+### 4. Print data
 ```cpp
-void NEW();
-```
-Creates a new table and appends it to `DB::TABLE`.
-
----
-
-### `DB::REMOVE`
-```cpp
-template <typename T>
-void REMOVE(std::vector<T>& onRemove, size_t toRemove);
-```
-Removes an element at index `toRemove` from any vector (tables, rows, cells, etc.).
-
----
-
-### `DB::PRINT`
-```cpp
-std::string PRINT(tableObj& tableTemp);
-```
-Returns a compact string representation of the table’s contents.  
-
-Example output:
-```
-DB::TABLE[0].ROW[0].CELL[0].cellInteger[0]=42
-DB::TABLE[0].ROW[0].CELL[0].cellString[0]="Hello"
+std::cout << DB::PRINT(t);   // compact one-line output
+std::cout << DB::TREE(t);    // pretty tree structure
 ```
 
 ---
 
-### `DB::TREE`
-```cpp
-std::string TREE(tableObj& tableTemp);
-```
-Pretty-prints the table in a **tree-like structure** for readability.
+## 📌 Examples
 
-Example output:
-```
-TABLE[0]:
- | TABLE[0].ROW[0]:
- |  | TABLE[0].ROW[0].CELL[0]:
- |  |  | TABLE[0].ROW[0].CELL[0].cellInteger[0]: 42
- |  |
- |
-```
-
----
-
-### `DB::createDemoTable`
-```cpp
-void createDemoTable(tableObj& tableTemp);
-```
-Creates a pre-filled demo table structure (rows and cells).  
-Useful for testing and debugging.
-
----
-
-### `DB::easterEgg`
-```cpp
-std::string easterEgg(int egg);
-```
-Returns a fun string depending on `egg` value.  
-(Currently only supports `egg = 1`.)
-
----
-
-## Usage Examples
-
-### Example 1: Creating a table with variables
+### Example 1: Creating and printing a table
 ```cpp
 #include "kramdb.hpp"
 #include <iostream>
 
 int main() {
-    // Create a new table
-    DB::NEW();
+    DB::NEW();              // create table
     tableObj& t = DB::TABLE[0];
 
-    // Add a row and a cell
-    t.NEW();               // row 0
-    t.ROW[0].NEW();        // cell 0
+    t.NEW();                // row 0
+    t.ROW[0].NEW();         // cell 0
 
-    // Add variables into the cell
+    // add data
     t.ROW[0].CELL[0].NEW(TYPE::Integer);
-    t.ROW[0].CELL[0].cellInteger[0] = 42;
+    t.ROW[0].CELL[0].cellInteger[0] = 100;
 
     t.ROW[0].CELL[0].NEW(TYPE::String);
-    t.ROW[0].CELL[0].cellString[0] = "Hello";
+    t.ROW[0].CELL[0].cellString[0] = "User";
 
-    // Print results
+    // print results
     std::cout << DB::PRINT(t);
     std::cout << DB::TREE(t);
-
-    return 0;
 }
 ```
 
-### Example 2: Removing a row
+---
+
+### Example 2: Removing items
 ```cpp
-// Remove first row from a table
+// Remove row 0 from the table
 DB::REMOVE(t.ROW, 0);
+
+// Remove cell 0 from row 0
+DB::REMOVE(t.ROW[0].CELL, 0);
 ```
 
-### Example 3: Using demo table
+---
+
+### Example 3: Demo table
+The library provides a quick way to generate a sample table for testing:
+
 ```cpp
 tableObj demo;
 DB::createDemoTable(demo);
+
 std::cout << DB::TREE(demo);
 ```
 
-### Example 4: Easter egg
+---
+
+### Example 4: Easter Egg 🎉
 ```cpp
 std::cout << DB::easterEgg(1);
 ```
 
 ---
 
-## License
+## 🛠 API Overview (user-facing)
+
+- `DB::NEW()` → create a new table in memory  
+- `tableObj::NEW()` → add a new row to a table  
+- `tableRowObj::NEW()` → add a new cell to a row  
+- `tableCellObj::NEW(TYPE type)` → add a variable (Boolean, Integer, String, Float) to a cell  
+- `DB::REMOVE(container, index)` → remove element from a vector (table, row, or cell)  
+- `DB::PRINT(table)` → return compact string of table contents  
+- `DB::TREE(table)` → return pretty-printed structure of table  
+- `DB::createDemoTable(table)` → generate a pre-filled test table  
+- `DB::easterEgg(n)` → print a fun easter egg  
+
+---
+
+## 📄 License
 Licensed under **Creative Commons CC-BY-SA ©2025**.  
-See [LICENCE.txt](LICENCE.txt).
+See [LICENCE.txt](LICENCE.txt).  
 
 ---
